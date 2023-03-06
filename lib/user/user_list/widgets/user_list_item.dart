@@ -23,7 +23,7 @@ class UserListItem extends StatelessWidget {
     return Material(
       child: ListTile(
         onTap: () => context.go(
-          "/history/$userId",
+          "/reputation_history/$userId",
         ),
         leading: Image.network(user.avatar),
         title: Row(

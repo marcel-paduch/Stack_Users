@@ -50,7 +50,7 @@ void main() async {
               ),
           routes: [
             GoRoute(
-              path: 'history/:userId',
+              path: 'reputation_history/:userId',
               builder: (context, state) => UserReputationPage(
                 _getUserReputationUseCase,
                 int.parse(state.params["userId"]!),
