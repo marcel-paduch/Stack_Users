@@ -28,7 +28,7 @@ class UserListPage extends StatelessWidget {
               _getCachedUsersUseCase,
               _setUserFavouriteStatusUseCase,
               _getLikedUsers,
-            )..add(Fetch()),
+            )..add(Init()),
         child: const UserListWidget());
   }
 }

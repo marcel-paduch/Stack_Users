@@ -18,26 +18,29 @@ class UserReputationBloc
 
   UserReputationBloc(this._getUserReputationUseCase, {required this.userId})
       : super(const UserReputationState()) {
+    on<Init>(
+      _onInit,
+    );
     on<Fetch>(
       _onPostFetched,
       transformer: throttleDroppable(throttleDuration),
     );
   }
 
+  Future<void> _onInit(Init event, Emitter<UserReputationState> emit) async {
+    final reputations =
+        await _getUserReputationUseCase.get(userId, 1, _pageSize);
+    return emit(state.copyWith(
+      status: UserReputationStatus.success,
+      users: reputations.reputations.cast(),
+      hasReachedMax: reputations.hasMore == false,
+    ));
+  }
+
   Future<void> _onPostFetched(
       UserReputationEvent event, Emitter<UserReputationState> emit) async {
     if (state.hasReachedMax) return;
     try {
-      if (state.status == UserReputationStatus.initial) {
-        final reputations =
-            await _getUserReputationUseCase.get(userId, 1, _pageSize);
-        return emit(state.copyWith(
-          status: UserReputationStatus.success,
-          users: reputations.reputations.cast(),
-          hasReachedMax: reputations.hasMore == false,
-        ));
-      }
-
       final reputations = await _getUserReputationUseCase.get(
           userId, (state.reputation.length ~/ _pageSize) + 1, _pageSize);
       emit(reputations.hasMore == false

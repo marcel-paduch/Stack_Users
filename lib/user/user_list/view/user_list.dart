@@ -53,7 +53,7 @@ class _UserListState extends State<UserListWidget> {
               controller: _scrollController,
             );
             break;
-          case UserListStatus.initial:
+          case UserListStatus.loading:
             body = const Center(child: CircularProgressIndicator());
             break;
         }

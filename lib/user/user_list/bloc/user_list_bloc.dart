@@ -28,6 +28,7 @@ class UserListBloc extends Bloc<UserListEvent, UserListState> {
     this._setUserFavouriteStatusUseCase,
     this._getLikedUsers,
   ) : super(const UserListState()) {
+    on<Init>(_onInit);
     on<Fetch>(
       _onPostFetched,
       transformer: throttleDroppable(_throttleDuration),
@@ -36,21 +37,24 @@ class UserListBloc extends Bloc<UserListEvent, UserListState> {
     on<ToggleFilteredItems>(_onToggleFilter);
   }
 
+  Future<void> _onInit(
+    Init event,
+    Emitter<UserListState> emit,
+  ) async {
+    final result = await _fetchUsersUseCase.fetch(1, _pageSize);
+    return emit(state.copyWith(
+      status: UserListStatus.success,
+      users: result.users.cast(),
+      hasReachedMax: result.hasMore == false,
+    ));
+  }
+
   Future<void> _onPostFetched(
     Fetch event,
     Emitter<UserListState> emit,
   ) async {
     if (state.hasReachedMax) return;
     try {
-      if (state.status == UserListStatus.initial) {
-        final result = await _fetchUsersUseCase.fetch(1, _pageSize);
-        return emit(state.copyWith(
-          status: UserListStatus.success,
-          users: result.users.cast(),
-          hasReachedMax: result.hasMore == false,
-        ));
-      }
-
       final result = await _fetchUsersUseCase.fetch(
           (state.users.length ~/ _pageSize) + 1, _pageSize);
       emit(result.hasMore == false

@@ -18,7 +18,7 @@ class UserReputationPage extends StatelessWidget {
         create: (_) => UserReputationBloc(
           _getUserReputationUseCase,
           userId: userId,
-        )..add(Fetch()),
+        )..add(Init()),
         child: const UserReputationWidget(),
       ),
     );

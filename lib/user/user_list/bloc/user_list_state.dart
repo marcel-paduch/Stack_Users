@@ -1,12 +1,10 @@
-
 part of 'user_list_bloc.dart';
 
-
-enum UserListStatus { initial, success, failure }
+enum UserListStatus { loading, success, failure }
 
 class UserListState extends Equatable {
   const UserListState({
-    this.status = UserListStatus.initial,
+    this.status = UserListStatus.loading,
     this.users = const <User>[],
     this.hasReachedMax = false,
     this.isFilterOn = false,

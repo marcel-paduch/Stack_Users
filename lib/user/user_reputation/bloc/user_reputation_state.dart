@@ -1,10 +1,10 @@
 part of 'user_reputation_bloc.dart';
 
-enum UserReputationStatus { initial, success, failure }
+enum UserReputationStatus { loading, success, failure }
 
 class UserReputationState extends Equatable {
   const UserReputationState({
-    this.status = UserReputationStatus.initial,
+    this.status = UserReputationStatus.loading,
     this.reputation = const <UserReputation>[],
     this.hasReachedMax = false,
   });

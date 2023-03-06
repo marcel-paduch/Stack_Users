@@ -4,5 +4,6 @@ abstract class UserReputationEvent extends Equatable {
   List<Object> get props => [];
 }
 
+class Init extends UserReputationEvent {}
 class Fetch extends UserReputationEvent {}
 

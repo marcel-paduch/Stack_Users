@@ -43,7 +43,7 @@ class _UserListState extends State<UserReputationWidget> {
                   : state.reputation.length + 1,
               controller: _scrollController,
             );
-          case UserReputationStatus.initial:
+          case UserReputationStatus.loading:
             return const Center(child: CircularProgressIndicator());
         }
       },

@@ -5,6 +5,7 @@ abstract class UserListEvent extends Equatable {
   List<Object> get props => [];
 }
 
+class Init extends UserListEvent {}
 class Fetch extends UserListEvent {}
 class ToggleFilteredItems extends UserListEvent {}
 
